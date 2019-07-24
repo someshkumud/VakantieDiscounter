@@ -1,7 +1,7 @@
 package pages;
 
 /**
- * This class is created to define page objects of Login page in Caspar application
+ * This class is created to define page objects of Search Result Page in VakantieDiscounter application
  * Bugs: NA
  *
  * @author Somesh Kumud
@@ -15,11 +15,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import util.BaseUtil;
 
 import java.util.List;
 
-public class SearchResultPage extends BaseUtil {
+import static util.BaseUtil.Wait;
+import static util.BaseUtil.clickOn;
+
+public class SearchResultPage {
     /**
      * Page factory constructor function will instantiate objects
      *
@@ -50,8 +52,10 @@ public class SearchResultPage extends BaseUtil {
     private WebElement btnClosePopup;
 
     /**
-     * loginToCasper method will be called after navigating to Caspar application and it will-
-     * 1. Enter login credentials on login page and click on login button
+     * filterSearchResults method will apply filters on search results:
+     * 1. select Include Flight
+     * 2. select fly from Amsterdam
+     * 3. Select board type as All Inclusive
      */
 
     public void filterSearchResults() {
@@ -69,9 +73,9 @@ public class SearchResultPage extends BaseUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Wait(1);
+//        Wait(1);
         List<WebElement> allPackages = panelSearchResults.findElements(By.xpath("//li[starts-with(@id, 'search-results')]"));
         allPackages.get(packageIndex).findElement(By.xpath("//li[starts-with(@id, 'search-results')]//span[contains(text(),'Bekijk')]")).click();
-        Wait(2);
+//        Wait(2);
     }
 }

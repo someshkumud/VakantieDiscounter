@@ -5,14 +5,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import util.BaseUtil.*;
 
-import static util.BaseUtil.Wait;
 import static util.BaseUtil.clickOn;
+import static util.BaseUtil.defaultProperties;
 
 
 /**
- * This class is created to define page objects of HomePage page in Caspar application
+ * This class is created to define page objects of HomePage page in VakantieDiscounter application
  * Bugs: NA
  *
  * @author Somesh Kumud
@@ -39,16 +38,27 @@ public class OfferDetailsPage {
     private WebElement btnBookNow;
 
 
+    @FindBy(how = How.XPATH, using = "//p[@class='price no-marker with-info']/span[@class='price-number']")
+    private WebElement labelCheckoutPriceEuro;
+
+    @FindBy(how = How.XPATH, using = "//p[@class='price no-marker with-info']/span[@class='price-decimals']")
+    private WebElement labelCheckoutPriceCents;
+
     /**
-     * addPatient method will -
-     * 1. Open add patient module from dashboard
-     * 2. Enter default mandatory details of patient, unless other details not entered from Feature file/set in default properties file
-     * 3. Clicks on save button
+     * checkPrice method will -
+     * 1. Click on Check Price button
+     * 2. Save price on checkout screen in Hash-Map
+     * 3. Clicks on Book Now button
      */
     public void checkPrice() {
         clickOn(btnCheckPrice);
-        Wait(4);
+//        Wait(4);
+        getCheckoutPrice();
         clickOn(btnBookNow);
+    }
+
+    private void getCheckoutPrice() {
+        defaultProperties.put("checkoutPrice", labelCheckoutPriceEuro.getText().replace(",", "").replace(".", "") + "." + labelCheckoutPriceCents.getText());
     }
 
 }

@@ -11,7 +11,10 @@ package util;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -98,7 +101,14 @@ public class BaseUtil {
      * @param webElement object of link/button
      */
     public static void clickOn(WebElement webElement) {
+        WebDriverWait wait=new WebDriverWait(driver,20);
+        wait.until(ExpectedConditions.visibilityOf(webElement));
         webElement.click();
+    }
+
+    public static void clickOnElementAction(WebElement webElement) {
+        Actions builder = new Actions(driver);
+        builder.moveToElement(webElement).click().perform();
     }
 
     /**
@@ -106,7 +116,6 @@ public class BaseUtil {
      */
     public static void selectDropdownByVisibleText(WebElement webElementDropdown, WebElement value) {
         clickOn(webElementDropdown);
-//        Wait(1);
         value.click();
     }
 
@@ -144,6 +153,7 @@ public class BaseUtil {
 
         clickOn(calander);
 //        Select Month
+        Wait(1);
         driver.findElement(By.xpath("//div[@class=\"monthpicker\"]")).click();
         driver.findElement(By.xpath("//div[@class=\"monthpicker\"]//a[" + mm + "]")).click();
 
@@ -153,7 +163,6 @@ public class BaseUtil {
         //****Select Date
         //datePickerTable
         driver.findElement(By.xpath("//div[@class=\"dates\"]//span[contains(text(),'" + dd + "')]")).click();
-
     }
 }
 

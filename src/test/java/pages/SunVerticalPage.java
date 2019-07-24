@@ -1,6 +1,6 @@
 package pages;
 /**
- * This class is created to define page objects of Consent page in Caspar application
+ * This class is created to define page objects of Sun Vertical Page in VakantieDiscounter application
  * Bugs: NA
  *
  * @author Somesh Kumud
@@ -15,11 +15,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import util.BaseUtil;
 
+import static util.BaseUtil.*;
 import static util.DriverSetup.driver;
 
-public class SunVerticalPage extends BaseUtil {
+public class SunVerticalPage {
 
     /**
      * Page factory constructor function will instantiate objects
@@ -56,9 +56,9 @@ public class SunVerticalPage extends BaseUtil {
 
 
     /**
-     * verifyVisibilityOfMedicalInformationPageAndClosePage method will -
-     * 1. verify Visibility Of Medical Information Page And Close Page
-     * 2. Close Page
+     * searchHoliday method will -
+     * 1. Enter the search criteria and search for holiday
+     *
      */
     public void searchHoliday() {
 //        selectDestination(defaultProperties.get("destination"));

@@ -5,14 +5,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
 import static util.BaseUtil.clickOn;
+import static util.DriverSetup.driver;
 
 
 /**
- * This class is created to define page objects of HomePage page in Caspar application
+ * This class is created to define page objects of HomePage page in VakantieDiscounter application
  * Bugs: NA
  *
  * @author Somesh Kumud
@@ -40,15 +43,20 @@ public class ConfirmationPage {
 
 
     /**
-     * addPatient method will -
-     * 1. Open add patient module from dashboard
-     * 2. Enter default mandatory details of patient, unless other details not entered from Feature file/set in default properties file
-     * 3. Clicks on save button
+     * confirmDetails method will -
+     * 1. click on all checkboxes on the confirmation screen
+     * 2. Clicks on confirm button
      */
     public void confirmDetails() {
-        for (WebElement checkBox:checkBoxGroup) {
-            clickOn(checkBox);
+        if (checkBoxGroup.size() != 0) {
+            for (WebElement checkBox : checkBoxGroup) {
+                clickOn(checkBox);
+            }
+            clickOn(btnConfirm);
+            WebDriverWait wait = new WebDriverWait(driver, 5);
+            wait.until(ExpectedConditions.visibilityOf(btnConfirm));
         }
-        clickOn(btnConfirm);
     }
+//        Wait(5);
 }
+

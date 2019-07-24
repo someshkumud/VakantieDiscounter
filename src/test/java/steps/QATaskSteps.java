@@ -5,6 +5,7 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
+import org.junit.Assert;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import pages.*;
@@ -32,19 +33,19 @@ public class QATaskSteps extends BaseUtil {
      */
     @After
     public void TearDownTest(Scenario scenario) {
+        try {
+            final byte[] screenShot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+            scenario.embed(screenShot, "image/png");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (scenario.isFailed()) {
             System.out.println("SCENARIO FAILED : " + scenario.getName());
-            try {
-                final byte[] screenShot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-                scenario.embed(screenShot, "image/png");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         } else {
             System.out.println("SCENARIO PASSED : " + scenario.getName());
         }
         System.out.println("Closing the browser : MOCK");
-//        closeDriver();
+        closeDriver();
     }
 
     @Given("^Launch browser and navigate to Homepage$")
@@ -72,43 +73,49 @@ public class QATaskSteps extends BaseUtil {
 
     @And("^Search Holiday$")
     public void searchHoliday() {
-        SunVerticalPage sunVerticalPage=new SunVerticalPage(driver);
+        SunVerticalPage sunVerticalPage = new SunVerticalPage(driver);
         sunVerticalPage.searchHoliday();
     }
 
     @And("^Filter search result$")
     public void filterSearchResult() {
-        SearchResultPage searchResultPage=new SearchResultPage(driver);
+        SearchResultPage searchResultPage = new SearchResultPage(driver);
         searchResultPage.filterSearchResults();
     }
 
     @And("^Select package available at index (\\d+)$")
     public void selectPackageAvailableAtIndex(int arg0) {
-        SearchResultPage searchResultPage=new SearchResultPage(driver);
+        SearchResultPage searchResultPage = new SearchResultPage(driver);
         searchResultPage.selectPackageByIndex(arg0);
     }
 
     @And("^Navigate to Check Price page$")
     public void navigateToCheckPricePage() {
-        OfferDetailsPage offerDetailsPage=new OfferDetailsPage(driver);
+        OfferDetailsPage offerDetailsPage = new OfferDetailsPage(driver);
         offerDetailsPage.checkPrice();
     }
 
     @And("^Enter Traveler Details$")
     public void enterTravelerDetails() {
-        BookFlowPage bookFlowPage=new BookFlowPage(driver);
+        BookFlowPage bookFlowPage = new BookFlowPage(driver);
         bookFlowPage.enterTravelerDetails();
     }
 
     @And("^Confirm application details$")
     public void confirmApplicationDetails() {
-        ConfirmationPage confirmationPage=new ConfirmationPage(driver);
+        ConfirmationPage confirmationPage = new ConfirmationPage(driver);
         confirmationPage.confirmDetails();
     }
 
     @And("^Move to Step 3$")
     public void moveToStep() {
-        AdditionalOptionPage additionalOptionPage=new AdditionalOptionPage(driver);
+        AdditionalOptionPage additionalOptionPage = new AdditionalOptionPage(driver);
         additionalOptionPage.navigateToStep3();
+    }
+
+    @And("^Verify final price$")
+    public void verifyFinalPrice() {
+        OverviewAndPaymentPage overviewAndPaymentPage = new OverviewAndPaymentPage(driver);
+        Assert.assertEquals(overviewAndPaymentPage.getTotalPrice(), Float.parseFloat(defaultProperties.get("checkoutPrice")), 0.001);
     }
 }

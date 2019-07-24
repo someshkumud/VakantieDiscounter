@@ -1,7 +1,6 @@
 package pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,11 +12,9 @@ import java.util.List;
 import static util.BaseUtil.*;
 import static util.DriverSetup.driver;
 
-//import static util.BaseUtil.defaultProperties;
-
 
 /**
- * This class is created to define page objects of HomePage page in Caspar application
+ * This class is created to define page objects of Book Flow Page in VakantieDiscounter application
  * Bugs: NA
  *
  * @author Somesh Kumud
@@ -117,79 +114,73 @@ public class BookFlowPage {
 
 
     /**
-     * addPatient method will -
-     * 1. Open add patient module from dashboard
-     * 2. Enter default mandatory details of patient, unless other details not entered from Feature file/set in default properties file
-     * 3. Clicks on save button
+     * enterTravelerDetails method will -
+     * 1. Enter traveler 1 & traveler 2 details on the page
+     * 2. Enter contact and emergency contact details on the page
+     * 3. Clicks on "Naar stap 2: Aanvullende opties" button
      */
     public void enterTravelerDetails() {
         enterTraveler1Details();
         enterTraveler2Details();
         enterContactDetails();
         enterEmergencyContactDetails();
-
-    }
-
-    private void enterEmergencyContactDetails() {
-        enterValueInTextBox(txtEmergencyContactName, defaultProperties.get("Naam"));
-//        enterValueInTextBox(txtEmergencyContactEmail, defaultProperties.get("Huisnummer"));
-        enterValueInTextBox(txtEmergencyContactPhoneNumber, defaultProperties.get("Telefoonnummer"));
         clickOn(btnStep2);
     }
 
+
+    private void enterEmergencyContactDetails() {
+        enterValueInTextBox(txtEmergencyContactName, defaultProperties.get("naam"));
+        enterValueInTextBox(txtEmergencyContactPhoneNumber, defaultProperties.get("telefoonNummer"));
+    }
+
     private void enterContactDetails() {
-//        selectDropdownByVisibleText(selectMainApplicantCountry, driver.findElement(By.xpath("(//a[contains(text(),'" + defaultProperties.get("Land") + "')])[1]")));
-        enterValueInTextBox(txtMainApplicantPostCode, defaultProperties.get("Postcode"));
-        enterValueInTextBox(txtMainApplicantHouseNumber, defaultProperties.get("Huisnummer"));
-        enterValueInTextBox(txtMainApplicantAddition, defaultProperties.get("Straat")+", "+defaultProperties.get("Woonplaats"));
-        enterValueInTextBox(txtMainApplicantEmail, defaultProperties.get("Emailadres"));
-        enterValueInTextBox(txtMainApplicantPhoneNumber, defaultProperties.get("Telefoonnummer"));
+        clickOn(selectMainApplicantCountry);
+        Wait(1);
+        WebElement elementList = driver.findElement(By.xpath("(//a[contains(text(),'" + defaultProperties.get("land") + "')])[1]"));
+        clickOnElementAction(elementList);
+        enterValueInTextBox(txtMainApplicantPostCode, defaultProperties.get("postcode"));
+        enterValueInTextBox(txtMainApplicantHouseNumber, defaultProperties.get("huisnummer"));
+        enterValueInTextBox(txtMainApplicantAddition, defaultProperties.get("straat") + ", " + defaultProperties.get("woonplaats"));
+        enterValueInTextBox(txtMainApplicantEmail, defaultProperties.get("emailDdres"));
+        enterValueInTextBox(txtMainApplicantPhoneNumber, defaultProperties.get("telefoonNummer"));
 
     }
 
     private void enterTraveler1Details() {
-//        JavascriptExecutor jsExecuter = (JavascriptExecutor)driver;
-//        jsExecuter.executeScript("window.scrollBy(0,600)","");
-        selectRadioButtonValue(radioPassenger1Salutation, defaultProperties.get("Aanhef1"));
-        enterValueInTextBox(txtPassenger1FirstName, defaultProperties.get("Voornaam1"));
-        enterValueInTextBox(txtPassenger1LastName, defaultProperties.get("Achternaam1"));
+        selectRadioButtonValue(radioPassenger1Salutation, defaultProperties.get("aanhef1"));
+        enterValueInTextBox(txtPassenger1FirstName, defaultProperties.get("voornaam1"));
+        enterValueInTextBox(txtPassenger1LastName, defaultProperties.get("achternaam1"));
         enterDateOfBirthForPassenger1();
-//        clickOn(linkPassenger1EditNationality);
-//        Wait(1);
-//        selectDropdownByVisibleText(selectPassenger1Nationality, driver.findElement(By.xpath("(//a[contains(text(),'" + defaultProperties.get("Nationaliteit1") + "')])[1]/parent::*")));
-//        selectDropdownByVisibleText(selectPassenger1Nationality, driver.findElement(By.xpath("//*[@id=\"booking-questions\"]/div[1]/form[1]/fieldset/div[2]/div/div/div/ul/li[1]/a")));
+        clickOn(linkPassenger1EditNationality);
+        Wait(1);
+        clickOn(selectPassenger1Nationality);
+        Wait(1);
+        WebElement elementList = driver.findElement(By.xpath("(//a[contains(text(),'" + defaultProperties.get("nationaliteit1") + "')])[1]"));
+        clickOnElementAction(elementList);
     }
 
     private void enterTraveler2Details() {
-        selectRadioButtonValue(radioPassenger2Salutation, defaultProperties.get("Aanhef2"));
-        enterValueInTextBox(txtPassenger2FirstName, defaultProperties.get("Voornaam2"));
-        enterValueInTextBox(txtPassenger2LastName, defaultProperties.get("Achternaam2"));
+        selectRadioButtonValue(radioPassenger2Salutation, defaultProperties.get("aanhef2"));
+        enterValueInTextBox(txtPassenger2FirstName, defaultProperties.get("voornaam2"));
+        enterValueInTextBox(txtPassenger2LastName, defaultProperties.get("achternaam2"));
         enterDateOfBirthForPassenger2();
-//        clickOn(linkPassenger2EditNationality);
-//        JavascriptExecutor jsExecuter = (JavascriptExecutor)driver;
-//        jsExecuter.executeScript("window.scrollBy(0,500)","");
-//        Wait(1);
-//        selectDropdownByVisibleText(selectPassenger2Nationality, driver.findElement(By.xpath("(//a[contains(text(),'" + defaultProperties.get("Nationaliteit2") + "')])[1]/parent::*")));
+        clickOn(linkPassenger2EditNationality);
+        Wait(1);
+        clickOn(selectPassenger2Nationality);
+        Wait(1);
+        WebElement elementList = driver.findElement(By.xpath("(//a[contains(text(),'" + defaultProperties.get("nationaliteit2") + "')])[1]"));
+        clickOnElementAction(elementList);
     }
 
     private void enterDateOfBirthForPassenger1() {
-        selectDropdownByVisibleText(selectPassenger1DOBdd, defaultProperties.get("Geboortedatum1").split(" ")[0].trim());
-        selectDropdownByVisibleText(selectPassenger1DOBmm, defaultProperties.get("Geboortedatum1").split(" ")[1].trim());
-        selectDropdownByVisibleText(selectPassenger1DOByy, defaultProperties.get("Geboortedatum1").split(" ")[2].trim());
+        selectDropdownByVisibleText(selectPassenger1DOBdd, defaultProperties.get("geboortedatum1").split(" ")[0].trim());
+        selectDropdownByVisibleText(selectPassenger1DOBmm, defaultProperties.get("geboortedatum1").split(" ")[1].trim());
+        selectDropdownByVisibleText(selectPassenger1DOByy, defaultProperties.get("geboortedatum1").split(" ")[2].trim());
     }
 
     private void enterDateOfBirthForPassenger2() {
-        selectDropdownByVisibleText(selectPassenger2DOBdd, defaultProperties.get("Geboortedatum2").split(" ")[0]);
-        selectDropdownByVisibleText(selectPassenger2DOBmm, defaultProperties.get("Geboortedatum2").split(" ")[1]);
-        selectDropdownByVisibleText(selectPassenger2DOByy, defaultProperties.get("Geboortedatum2").split(" ")[2]);
+        selectDropdownByVisibleText(selectPassenger2DOBdd, defaultProperties.get("geboortedatum2").split(" ")[0]);
+        selectDropdownByVisibleText(selectPassenger2DOBmm, defaultProperties.get("geboortedatum2").split(" ")[1]);
+        selectDropdownByVisibleText(selectPassenger2DOByy, defaultProperties.get("geboortedatum2").split(" ")[2]);
     }
-
-
-    /**
-     * getCredentials method will be called after adding patient and this will-
-     * 1. capture credentials of newly created patients and update into hashmap
-     * 2. Close the dialog box
-     */
-
-
 }
