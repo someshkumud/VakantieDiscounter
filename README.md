@@ -101,3 +101,5 @@ And that is all
 2. Navigate to project folder
 3. Run command "mvn clean compile verify" - This wil start execution
 4. After execution  completion report will be generated : "<Project Folder>\target\cucumber-html-reports\overview-features.html"
+
+<B>NOTE : To add test to Continuous integration just add maven command (mvn clean compile verify) to testing stage of pipeline</B>
