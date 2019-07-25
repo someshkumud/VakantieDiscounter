@@ -6,9 +6,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-
 /**
- * This class is created to define page objects of Overview And Payment Page in VakantieDiscounter application
+ * This class is created to define page objects and methods of Overview And Payment Page in VakantieDiscounter application
  * Bugs: NA
  *
  * @author Somesh Kumud
@@ -30,14 +29,11 @@ public class OverviewAndPaymentPage {
     @FindBy(how = How.XPATH, using = "//table[@class='the-total']//span[@class='price-rowtotal']")
     private WebElement labelTotalPriceEuros;
 
-
     @FindBy(how = How.XPATH, using = "//table[@class='the-total']//span[@class='price-rowtotal-decimals']")
     private WebElement labelTotalPriceCents;
 
-
     /**
-     * getTotalPrice method will -
-     * 1. Read total price from screen and return as Float
+     * getTotalPrice method will read total price from screen and return as Float
      */
     public float getTotalPrice() {
         String totalPrice = labelTotalPriceEuros.getText().replace(".", "") + "." + labelTotalPriceCents.getText();

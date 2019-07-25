@@ -1,13 +1,12 @@
 package pages;
 /**
- * This class is created to define page objects of Sun Vertical Page in VakantieDiscounter application
+ * This class is created to define page objects and methods of Sun Vertical Page in VakantieDiscounter application
  * Bugs: NA
  *
  * @author Somesh Kumud
  * @version 1.0
  * @since 06/06/2019
  */
-
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -42,7 +41,7 @@ public class SunVerticalPage {
     @FindBy(how = How.ID, using = "select-party")
     private WebElement selectTravelParty;
 
-    @FindBy(how = How.XPATH, using = "//div[@id=\"search-box\"]/div/button")
+    @FindBy(how = How.XPATH, using = "//div[@id='search-box']/div/button")
     private WebElement btnSearchHoliday;
 
     @FindBy(how = How.ID, using = "adults.0")
@@ -56,22 +55,22 @@ public class SunVerticalPage {
 
 
     /**
-     * searchHoliday method will -
-     * 1. Enter the search criteria and search for holiday
-     *
+     * searchHoliday method will enter the search criteria and search for holiday
      */
     public void searchHoliday() {
-//        selectDestination(defaultProperties.get("destination"));
-        selectDropdownByVisibleText(selectDestination, driver.findElement(By.xpath("//div[@id=\"search-box\"]//ul[3]//a[contains(text(),'" + defaultProperties.get("destination") + "')]")));
-        selectDateInCalander(selectTravelDate, defaultProperties.get("travelDate"));
-//        selectDropdownByVisibleText(selectTravelDate, driver.findElement(By.xpath("//div[@id=\"search-box\"]//input[@value='" + defaultProperties.get("travelDate") + "')]")));
-        selectDropdownByVisibleText(selectDuration, driver.findElement(By.xpath("//label[contains(text(), '"+defaultProperties.get("duration")+"')]")));
+        selectDropdownByVisibleText(selectDestination, driver.findElements(By.xpath("//a[contains(text(),'" + defaultProperties.get("destination") + "')]")).get(0));
+        selectDateInCalender(selectTravelDate, defaultProperties.get("travelDate"));
+        selectDropdownByVisibleText(selectDuration, driver.findElement(By.xpath("//label[contains(text(), '" + defaultProperties.get("duration") + "')]")));
 
         selectTravelers();
         clickOn(btnSearchHoliday);
     }
 
 
+    /**
+     * selectTravelers method : As travel party could be adult, childrens or babies.
+     * This method will select all travel parties in dropdown
+     */
     private void selectTravelers() {
         clickOn(selectTravelParty);
         selectDropdownByValue(selectAdults, defaultProperties.get("adultTravelers"));

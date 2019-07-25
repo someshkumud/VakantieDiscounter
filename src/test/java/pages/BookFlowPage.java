@@ -14,7 +14,7 @@ import static util.DriverSetup.driver;
 
 
 /**
- * This class is created to define page objects of Book Flow Page in VakantieDiscounter application
+ * This class is created to define page objects and methods of Book Flow Page in VakantieDiscounter application
  * Bugs: NA
  *
  * @author Somesh Kumud
@@ -33,11 +33,11 @@ public class BookFlowPage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(how = How.XPATH, using = "//input[@name=\"passenger-01_name-salutation\"]/parent::*")
+    @FindBy(how = How.XPATH, using = "//input[@name='passenger-01_name-salutation']/parent::*")
     private List<WebElement> radioPassenger1Salutation;
 
 
-    @FindBy(how = How.XPATH, using = "//input[@name=\"passenger-02_name-salutation\"]/parent::*")
+    @FindBy(how = How.XPATH, using = "//input[@name='passenger-02_name-salutation']/parent::*")
     private List<WebElement> radioPassenger2Salutation;
 
     @FindBy(how = How.NAME, using = "passenger-01_name-first")
@@ -55,10 +55,10 @@ public class BookFlowPage {
     @FindBy(how = How.NAME, using = "passenger-01_name-birthdate-3")
     private WebElement selectPassenger1DOByy;
 
-    @FindBy(how = How.XPATH, using = "//fieldset[@class=\"passenger-01\"]//a[contains(text(),'wijzigen')]")
+    @FindBy(how = How.XPATH, using = "//fieldset[@class='passenger-01']//a[contains(text(),'wijzigen')]")
     private WebElement linkPassenger1EditNationality;
 
-    @FindBy(how = How.XPATH, using = "//button[@id=\"menu-toggle-1\"]")
+    @FindBy(how = How.XPATH, using = "//button[@id='menu-toggle-1']")
     private WebElement selectPassenger1Nationality;
 
     @FindBy(how = How.NAME, using = "passenger-02_name-first")
@@ -76,10 +76,10 @@ public class BookFlowPage {
     @FindBy(how = How.NAME, using = "passenger-02_name-birthdate-3")
     private WebElement selectPassenger2DOByy;
 
-    @FindBy(how = How.XPATH, using = "//fieldset[@class=\"passenger-02\"]//a[contains(text(),'wijzigen')]")
+    @FindBy(how = How.XPATH, using = "//fieldset[@class='passenger-02']//a[contains(text(),'wijzigen')]")
     private WebElement linkPassenger2EditNationality;
 
-    @FindBy(how = How.XPATH, using = "//button[@id=\"menu-toggle-1\"]")
+    @FindBy(how = How.XPATH, using = "//button[@id='menu-toggle-1']")
     private WebElement selectPassenger2Nationality;
 
     @FindBy(how = How.ID, using = "menu-toggle-:countrycode")
@@ -109,7 +109,7 @@ public class BookFlowPage {
     @FindBy(how = How.NAME, using = "stay-home_tel")
     private WebElement txtEmergencyContactPhoneNumber;
 
-    @FindBy(how = How.XPATH, using = "(//a[@href=\"#booking-questions\" and contains(text(),'Naar stap 2: Aanvullende opties') ])[2]")
+    @FindBy(how = How.XPATH, using = "(//a[@href='#booking-questions' and contains(text(),'Naar stap 2: Aanvullende opties') ])[2]")
     private WebElement btnStep2;
 
 
@@ -118,6 +118,7 @@ public class BookFlowPage {
      * 1. Enter traveler 1 & traveler 2 details on the page
      * 2. Enter contact and emergency contact details on the page
      * 3. Clicks on "Naar stap 2: Aanvullende opties" button
+     * For each step separate methods are written
      */
     public void enterTravelerDetails() {
         enterTraveler1Details();
@@ -128,11 +129,45 @@ public class BookFlowPage {
     }
 
 
-    private void enterEmergencyContactDetails() {
-        enterValueInTextBox(txtEmergencyContactName, defaultProperties.get("naam"));
-        enterValueInTextBox(txtEmergencyContactPhoneNumber, defaultProperties.get("telefoonNummer"));
+    /**
+     * enterTraveler1Details method will enter traveler 1 details on the page
+     */
+    private void enterTraveler1Details() {
+        selectRadioButtonValue(radioPassenger1Salutation, defaultProperties.get("aanhef1"));
+        enterValueInTextBox(txtPassenger1FirstName, defaultProperties.get("voornaam1"));
+        enterValueInTextBox(txtPassenger1LastName, defaultProperties.get("achternaam1"));
+        selectDropdownByVisibleText(selectPassenger1DOBdd, defaultProperties.get("geboortedatum1").split(" ")[0].trim());
+        selectDropdownByVisibleText(selectPassenger1DOBmm, defaultProperties.get("geboortedatum1").split(" ")[1].trim());
+        selectDropdownByVisibleText(selectPassenger1DOByy, defaultProperties.get("geboortedatum1").split(" ")[2].trim());
+        clickOn(linkPassenger1EditNationality);
+        Wait(1);
+        clickOn(selectPassenger1Nationality);
+        Wait(1);
+        WebElement elementList = driver.findElement(By.xpath("(//a[contains(text(),'" + defaultProperties.get("nationaliteit1") + "')])[1]"));
+        clickOnElementAction(elementList);
     }
 
+    /**
+     * enterTraveler2Details method will enter traveler 2 details on the page
+     */
+    private void enterTraveler2Details() {
+        selectRadioButtonValue(radioPassenger2Salutation, defaultProperties.get("aanhef2"));
+        enterValueInTextBox(txtPassenger2FirstName, defaultProperties.get("voornaam2"));
+        enterValueInTextBox(txtPassenger2LastName, defaultProperties.get("achternaam2"));
+        selectDropdownByVisibleText(selectPassenger2DOBdd, defaultProperties.get("geboortedatum2").split(" ")[0]);
+        selectDropdownByVisibleText(selectPassenger2DOBmm, defaultProperties.get("geboortedatum2").split(" ")[1]);
+        selectDropdownByVisibleText(selectPassenger2DOByy, defaultProperties.get("geboortedatum2").split(" ")[2]);
+        clickOn(linkPassenger2EditNationality);
+        Wait(1);
+        clickOn(selectPassenger2Nationality);
+        Wait(1);
+        WebElement elementList = driver.findElement(By.xpath("(//a[contains(text(),'" + defaultProperties.get("nationaliteit2") + "')])[1]"));
+        clickOnElementAction(elementList);
+    }
+
+    /**
+     * enterContactDetails method will enter contact details on the page
+     */
     private void enterContactDetails() {
         clickOn(selectMainApplicantCountry);
         Wait(1);
@@ -146,41 +181,12 @@ public class BookFlowPage {
 
     }
 
-    private void enterTraveler1Details() {
-        selectRadioButtonValue(radioPassenger1Salutation, defaultProperties.get("aanhef1"));
-        enterValueInTextBox(txtPassenger1FirstName, defaultProperties.get("voornaam1"));
-        enterValueInTextBox(txtPassenger1LastName, defaultProperties.get("achternaam1"));
-        enterDateOfBirthForPassenger1();
-        clickOn(linkPassenger1EditNationality);
-        Wait(1);
-        clickOn(selectPassenger1Nationality);
-        Wait(1);
-        WebElement elementList = driver.findElement(By.xpath("(//a[contains(text(),'" + defaultProperties.get("nationaliteit1") + "')])[1]"));
-        clickOnElementAction(elementList);
+    /**
+     * enterTravelerDetails method will enter emergency contact details on the page
+     */
+    private void enterEmergencyContactDetails() {
+        enterValueInTextBox(txtEmergencyContactName, defaultProperties.get("naam"));
+        enterValueInTextBox(txtEmergencyContactPhoneNumber, defaultProperties.get("telefoonNummer"));
     }
 
-    private void enterTraveler2Details() {
-        selectRadioButtonValue(radioPassenger2Salutation, defaultProperties.get("aanhef2"));
-        enterValueInTextBox(txtPassenger2FirstName, defaultProperties.get("voornaam2"));
-        enterValueInTextBox(txtPassenger2LastName, defaultProperties.get("achternaam2"));
-        enterDateOfBirthForPassenger2();
-        clickOn(linkPassenger2EditNationality);
-        Wait(1);
-        clickOn(selectPassenger2Nationality);
-        Wait(1);
-        WebElement elementList = driver.findElement(By.xpath("(//a[contains(text(),'" + defaultProperties.get("nationaliteit2") + "')])[1]"));
-        clickOnElementAction(elementList);
-    }
-
-    private void enterDateOfBirthForPassenger1() {
-        selectDropdownByVisibleText(selectPassenger1DOBdd, defaultProperties.get("geboortedatum1").split(" ")[0].trim());
-        selectDropdownByVisibleText(selectPassenger1DOBmm, defaultProperties.get("geboortedatum1").split(" ")[1].trim());
-        selectDropdownByVisibleText(selectPassenger1DOByy, defaultProperties.get("geboortedatum1").split(" ")[2].trim());
-    }
-
-    private void enterDateOfBirthForPassenger2() {
-        selectDropdownByVisibleText(selectPassenger2DOBdd, defaultProperties.get("geboortedatum2").split(" ")[0]);
-        selectDropdownByVisibleText(selectPassenger2DOBmm, defaultProperties.get("geboortedatum2").split(" ")[1]);
-        selectDropdownByVisibleText(selectPassenger2DOByy, defaultProperties.get("geboortedatum2").split(" ")[2]);
-    }
 }

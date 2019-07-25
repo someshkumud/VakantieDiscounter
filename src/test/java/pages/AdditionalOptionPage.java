@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 /**
- * This class is created to define page objects of Additional Option Page in VakantieDiscounter application
+ * This class is created to define page objects and methods for Additional Option Page in VakantieDiscounter application
  * Bugs: NA
  *
  * @author Somesh Kumud
@@ -39,6 +39,5 @@ public class AdditionalOptionPage {
      */
     public void navigateToStep3() {
         btnStep3.get(1).sendKeys(Keys.ENTER);
-//        Wait(3);
     }
 }

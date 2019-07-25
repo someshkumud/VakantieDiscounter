@@ -5,18 +5,26 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import org.junit.Assert;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import pages.*;
-import util.BaseUtil;
 
+import static util.BaseUtil.defaultProperties;
+import static util.BaseUtil.loadDefaultProperties;
 import static util.DriverSetup.*;
 
 /**
- * Created by Somesh.
+ * This class is created to define test steps against steps mentioned in feature files
+ * Bugs: NA
+ *
+ * @author Somesh Kumud
+ * @version 1.0
+ * @since 22/07/2019
  */
-public class QATaskSteps extends BaseUtil {
+
+public class QATaskSteps {
 
     /**
      * @Before hook will execute before scenario and  load default properties file into hashmap
@@ -54,19 +62,13 @@ public class QATaskSteps extends BaseUtil {
         driver.get(defaultProperties.get("url"));
     }
 
-
-    @And("^close browser$")
-    public void closeBrowser() {
-        closeDriver();
-    }
-
-    @And("^navigate to Sun Vertical page$")
+    @And("^Navigate to Sun Vertical page$")
     public void navigateToSunVerticalPage() {
         HomePage homePage = new HomePage(driver);
         homePage.navigateToSunVertical();
     }
 
-    @And("^set \"([^\"]*)\" as \"([^\"]*)\"$")
+    @And("^Set \"([^\"]*)\" as \"([^\"]*)\"$")
     public void setAs(String key, String value) {
         defaultProperties.put(key, value);
     }
@@ -113,8 +115,8 @@ public class QATaskSteps extends BaseUtil {
         additionalOptionPage.navigateToStep3();
     }
 
-    @And("^Verify final price$")
-    public void verifyFinalPrice() {
+    @Then("^Final price matches with price on checkout screen$")
+    public void finalPriceMatchesWithPriceOnCheckoutScreen() {
         OverviewAndPaymentPage overviewAndPaymentPage = new OverviewAndPaymentPage(driver);
         Assert.assertEquals(overviewAndPaymentPage.getTotalPrice(), Float.parseFloat(defaultProperties.get("checkoutPrice")), 0.001);
     }

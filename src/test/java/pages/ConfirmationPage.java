@@ -15,7 +15,7 @@ import static util.DriverSetup.driver;
 
 
 /**
- * This class is created to define page objects of HomePage page in VakantieDiscounter application
+ * This class is created to define page objects and method of Confirmation page in VakantieDiscounter application
  * Bugs: NA
  *
  * @author Somesh Kumud
@@ -34,7 +34,7 @@ public class ConfirmationPage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(how = How.XPATH, using = "//span[@class=\"checkbox-option\"]")
+    @FindBy(how = How.XPATH, using = "//span[@class='checkbox-option']")
     private List<WebElement> checkBoxGroup;
 
 
@@ -57,6 +57,5 @@ public class ConfirmationPage {
             wait.until(ExpectedConditions.visibilityOf(btnConfirm));
         }
     }
-//        Wait(5);
 }
 

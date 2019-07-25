@@ -3,7 +3,7 @@ Feature: QA Task Feature
 
   Scenario: Perform QA Task as instructed
     Given Launch browser and navigate to Homepage
-    And navigate to Sun Vertical page
+    And Navigate to Sun Vertical page
     And Search Holiday
     And Filter search result
     And Select package available at index 1
@@ -11,4 +11,4 @@ Feature: QA Task Feature
     And Enter Traveler Details
     And Confirm application details
     And Move to Step 3
-    And Verify final price
+    Then Final price matches with price on checkout screen

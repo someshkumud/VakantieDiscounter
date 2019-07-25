@@ -32,23 +32,19 @@ public class SearchResultPage {
         PageFactory.initElements(driver, this);
     }
 
-
     @FindBy(how = How.XPATH, using = "//button/span[contains(text(),'Incl. vlucht')]")
     private WebElement linkIncludeFlight;
 
-
-    @FindBy(how = How.XPATH, using = "//span[@class=\"options-list__label-text\"][contains(text(),'Amsterdam (Schiphol)')]")
+    @FindBy(how = How.XPATH, using = "//span[@class='options-list__label-text'][contains(text(),'Amsterdam (Schiphol)')]")
     private WebElement linkFlyFromAmsterdam;
-
 
     @FindBy(how = How.XPATH, using = "//span[contains(text(),'All inclusive')]")
     private WebElement linkBoardTypeAllInclusive;
 
-    @FindBy(how = How.ID, using = "search-results-list")   //----//button[@class='transport-arranged']
+    @FindBy(how = How.ID, using = "search-results-list")
     private WebElement panelSearchResults;
 
-
-    @FindBy(how = How.XPATH, using = "//div[@id=\"email-subscription-popup\"]//button[contains(text(),'close')]")
+    @FindBy(how = How.XPATH, using = "//div[@id='email-subscription-popup']//button[contains(text(),'close')]")
     private WebElement btnClosePopup;
 
     /**
@@ -67,15 +63,16 @@ public class SearchResultPage {
         Wait(1);
     }
 
+    /**
+     * selectPackageByIndex method will select package at specific index on filtered search results
+     */
     public void selectPackageByIndex(int packageIndex) {
         try {
             clickOn(btnClosePopup);
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        Wait(1);
         List<WebElement> allPackages = panelSearchResults.findElements(By.xpath("//li[starts-with(@id, 'search-results')]"));
         allPackages.get(packageIndex).findElement(By.xpath("//li[starts-with(@id, 'search-results')]//span[contains(text(),'Bekijk')]")).click();
-//        Wait(2);
     }
 }

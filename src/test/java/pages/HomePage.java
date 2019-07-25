@@ -10,7 +10,7 @@ import static util.BaseUtil.clickOn;
 
 
 /**
- * This class is created to define page objects of HomePage page in VakantieDiscounter application
+ * This class is created to define page objects and methods of Home page in VakantieDiscounter application
  * Bugs: NA
  *
  * @author Somesh Kumud
@@ -29,11 +29,11 @@ public class HomePage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(how = How.XPATH, using = "//a[@href=\"/zonvakantie\"]/h3")
+    @FindBy(how = How.XPATH, using = "//a[@href='/zonvakantie']/h3")
     private WebElement linkSunVertical;
 
 
-    @FindBy(how = How.XPATH, using = "//div[@id=\"cookiebar\"]/div/div/div/div[2]/a")
+    @FindBy(how = How.XPATH, using = "//a[contains(text(),'OK, verder met alle cookies')]")
     private WebElement btnAllowCookies;
 
 
@@ -43,11 +43,8 @@ public class HomePage {
      * 2. Clicks on Sun Vertical view details link
      */
     public void navigateToSunVertical() {
-        allowCookies();
+        clickOn(btnAllowCookies);
         clickOn(linkSunVertical);
     }
 
-    public void allowCookies() {
-        clickOn(btnAllowCookies);
-    }
 }

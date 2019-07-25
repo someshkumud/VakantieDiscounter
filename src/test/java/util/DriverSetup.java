@@ -1,4 +1,12 @@
 package util;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.util.concurrent.TimeUnit;
+
+import static util.BaseUtil.defaultProperties;
+
 /**
  * This class is created to define webdriver setup for the automation of application
  * Bugs: NA
@@ -8,26 +16,17 @@ package util;
  * @since 06/06/2019
  */
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-import java.util.concurrent.TimeUnit;
-
-import static util.BaseUtil.defaultProperties;
-
 public class DriverSetup {
-    public static final String CHROME_DRIVER_PROPERTY = "webdriver.chrome.driver";
-    public static final String IE_DRIVER_PROPERTY = "webdriver.ie.driver";
-
+    private static final String CHROME_DRIVER_PROPERTY = "webdriver.chrome.driver";
     public static WebDriver driver;
 
     /**
-     * createDriver method will create webdriver object on the basis of browser name passed from frature file
+     * createDriver method will create webdriver object on the basis of browser name passed from feature file
      */
     public static void createDriver() {
         switch (defaultProperties.get("browser").toUpperCase()) {
             case "CHROME":
-                System.setProperty(CHROME_DRIVER_PROPERTY, System.getProperty("user.dir") +"\\drivers\\chromedriver.exe");
+                System.setProperty(CHROME_DRIVER_PROPERTY, System.getProperty("user.dir") + "\\drivers\\chromedriver.exe");
                 driver = new ChromeDriver();
                 break;
 
@@ -37,7 +36,7 @@ public class DriverSetup {
 //                break;
 //
             default:
-                System.setProperty(CHROME_DRIVER_PROPERTY,"C:\\Users\\somesh12339\\Downloads\\chromedriver.exe");
+                System.setProperty(CHROME_DRIVER_PROPERTY, "C:\\Users\\somesh12339\\Downloads\\chromedriver.exe");
                 driver = new ChromeDriver();
                 break;
         }
